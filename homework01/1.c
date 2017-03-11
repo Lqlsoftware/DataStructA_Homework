@@ -15,7 +15,7 @@ void LA_Sub_LB(link A, link B) {
 	r = A;
 	q = B->next;
 
-    // 寻找AB相同的部分
+    // 寻找AB相同的部分(注：这里可以使用快排+遍历的方式来达到o(nlog2n)的时间复杂度)
 	while (p && p->next) {
 		while (q) {
             // 找到相同部分并从A中删除
