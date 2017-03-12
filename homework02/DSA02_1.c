@@ -49,7 +49,6 @@ void main() {
 	int count = 0;
 	int p[5] = { 1,1,1,1,1 };
 	sqslink x = (sqslink)malloc(sizeof(sqstack));
-	ClearStack(x);
     printf("Exsist Qeuery:\n");
     while (i<5) {
         ClearStack(x);
@@ -64,6 +63,37 @@ void main() {
                     p[k - 1]=1;
                     printf("pop %d\n", k);
                     count++;
+                }
+            }
+            // Push
+            else {
+                for (int j = 0;j<5;j++)
+                    if (p[j] != 0) {
+                        Push(x, j+1);
+                        p[j] = 0;
+                    }
+            }
+        }
+        printf("\n");
+        i++;
+    }
+    i = 0;
+    printf("Cannot Exsist Qeuery:\n");
+    while (i<5) {
+        ClearStack(x);
+        count = 0;
+        for (int j = 0;j<5;j++)
+            p[j] = 1;
+        while (count != 5) {
+            // pop
+            if (rand() % 2 == 1) {
+                k = Pop(x);
+                if (k != -1) {
+                    p[k - 1]=1;
+                    if (GetTop(x)) {
+                        printf("pop %d\n", GetTop(x));
+                        count++;
+                    }
                 }
             }
             // Push
