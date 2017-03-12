@@ -1,3 +1,8 @@
+/*
+随机输出可能和不可能的出栈序列
+@Auther Robin Lu
+(这些方法写的我真是日了狗了 woc我为何不用java写)
+*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
