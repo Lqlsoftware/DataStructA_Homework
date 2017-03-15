@@ -1,11 +1,7 @@
-/*
-随机输出可能和不可能的出栈序列
-@Auther Robin Lu
-(这些方法写的我真是日了狗了 woc我为何不用java写)
-*/
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #define  MAXSIZE 5              //栈最大容量
@@ -46,15 +42,106 @@ int GetTop(sqslink s) {
 		return -1;          //栈空，返回-1
 	return s->data[s->top];
 }
-
+int check(int res[1000][10],int sb[10],int k) {
+    int i = 0;
+    int j;
+    while (res[i][0] != -1) {
+        for (j = 0;j<k;j++)
+            if (res[i][j]!=sb[j])
+                break;
+        if (j == k)
+            return 0;
+        i++;
+    }
+    return 1;
+}
 void main() {
 	srand(time(0));
-	int i = 0;
+	int i = 0,j;
 	int k;
 	int count = 0;
-	int p[5] = { 1,1,1,1,1 };
-	sqslink x = (sqslink)malloc(sizeof(sqstack));
+	int p[5] = { 0,0,0,0,0 };
+    sqslink x = (sqslink)malloc(sizeof(sqstack));
+	int res[1000][10];
+    int sb[10];
+    int flag = 1;
     printf("Exsist Qeuery:\n");
+    res[0][0] = 1;
+    res[0][1] = -1;
+    res[1][0] = -1;
+    while (flag) {
+        ClearStack(x);
+        count = 0;
+        memset(sb,-1,10*sizeof(int));
+        memset(p,0,5*sizeof(int));
+        for (i = 0;i<10;i++) {
+            // 搜索路径
+            if (EmptyStack(x))
+                sb[i] = 0;
+            else
+                sb[i] = 1;
+
+            if (!check(res,sb,i+1)) {
+                sb[i] = !sb[i];
+                if (!check(res,sb,i)) {
+                    //GG
+                    if (i == 9) {
+                        flag = 0;
+                        break;
+                    }
+                    i = i - 1;
+                    sb[i] = !sb[i];
+                    
+                    break;
+                }
+            }
+            // push
+            if (sb[i] == 0) {
+                for (j = 0;j<5;j++)
+                    if (p[j] != 1) {
+                        Push(x, j+1);
+                        p[j] = 1;
+                        break;
+                    }
+                if (j == 5)
+                    break;
+            }
+            else if (sb[i] == 1) {
+                k = Pop(x);
+                if (k != -1)
+                    printf("pop %d\n", k);
+                else 
+                    break;
+            }
+
+        }
+        for (int j = 0;j<10;j++) {
+            res[count][j] = sb[j];
+            printf(" %d ",sb[j]);
+        }
+        count ++;
+        res[count][0] = -1;
+        printf("\n");
+        system("pause");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     while (i<5) {
         ClearStack(x);
         count = 0;
@@ -65,7 +152,6 @@ void main() {
             if (rand() % 2 == 1) {
                 k = Pop(x);
                 if (k != -1) {
-                    p[k - 1]=1;
                     printf("pop %d\n", k);
                     count++;
                 }
@@ -76,6 +162,7 @@ void main() {
                     if (p[j] != 0) {
                         Push(x, j+1);
                         p[j] = 0;
+                        break;
                     }
             }
         }
@@ -84,34 +171,6 @@ void main() {
     }
     i = 0;
     printf("Cannot Exsist Qeuery:\n");
-    while (i<5) {
-        ClearStack(x);
-        count = 0;
-        for (int j = 0;j<5;j++)
-            p[j] = 1;
-        while (count != 5) {
-            // pop
-            if (rand() % 2 == 1) {
-                k = Pop(x);
-                if (k != -1) {
-                    p[k - 1]=1;
-                    if (GetTop(x)) {
-                        printf("pop %d\n", GetTop(x));
-                        count++;
-                    }
-                }
-            }
-            // Push
-            else {
-                for (int j = 0;j<5;j++)
-                    if (p[j] != 0) {
-                        Push(x, j+1);
-                        p[j] = 0;
-                    }
-            }
-        }
-        printf("\n");
-        i++;
-    }
+   */
     system("pause");
 }
