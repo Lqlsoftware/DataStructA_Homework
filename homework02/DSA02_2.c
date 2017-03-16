@@ -17,22 +17,22 @@ typedef struct node {
 
 int EmptyStack(sqslink s) {
 	if(s->top < 0)
-		return 1;   //栈空返回1
+		return 1;                       //栈空返回1
 	else
-		return 0;                     //栈非空返回0
+		return 0;                       //栈非空返回0
 }
 
 int Push(sqslink s, datatype x) {
 	if (s->top >= MAXSIZE - 1)
-		return -1;          //栈满溢出
+		return -1;                      //栈满溢出
 	s->top++;
-	s->data[s->top] = x;    //x进栈
-	return 0;               //成功
+	s->data[s->top] = x;                //x进栈
+	return 0;                           //成功
 }
 
 int Pop(sqslink s) {
 	if (EmptyStack(s))
-		return -1;          //栈空，返回-1
+		return -1;                      //栈空，返回-1
 	s->top--;
 	return s->data[s->top + 1];
 }
@@ -43,7 +43,7 @@ void ClearStack(sqslink s) {
 
 int GetTop(sqslink s) {
 	if (EmptyStack(s))
-		return -1;          //栈空，返回-1
+		return -1;                      //栈空，返回-1
 	return s->data[s->top];
 }
 
@@ -69,7 +69,7 @@ int xyx(link H) {
     flag = length % 2;
     
     // 遍历链表检查是否对称
-    link p, q;
+    link p;
     p = H->next;
     while (p != NULL) {
         i++;
@@ -90,14 +90,11 @@ int xyx(link H) {
         return 0;
 }
 
-void main() {
-	int DATA;
-	link A;
-    link p, r;
-	A = (link)malloc(sizeof(linknode));
-
-	// 输入链表A
-	r = A;
+link createLink() {
+    int DATA;
+    link A, r, p;
+    A = (link)malloc(sizeof(linknode));
+    r = A;
 	printf("Input Link A:\n");
 	scanf("%d", &DATA);
     // 输入-1结束输入
@@ -109,6 +106,12 @@ void main() {
 		scanf("%d", &DATA);
 	}
 	r->next = NULL;
+    return A;
+}
+
+void main() {
+
+	link A = createLink();
 
     // 输出结果
 	if (xyx(A))
