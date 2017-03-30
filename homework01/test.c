@@ -12,13 +12,13 @@ void main(){
 	}
 	int i = 0;
 	while (i<20) {
-        char name[6];
-        for (int j=0;j<5;j++)
-            name[j]=65+rand()%25;
+        	char name[6];
+        	for (int j=0;j<5;j++)
+            		name[j]=65+rand()%25;
 		fprintf(fp3, "%d %s %c %s\n",i+1,name,rand()%2?'M':'W',"计1503");       //向文件中写入结果
 		++i;
 	}
 	fclose(fp3);
 	printf("Saving successed!----result.txt\n");
-
+	system("pause");
 }
