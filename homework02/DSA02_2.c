@@ -77,17 +77,24 @@ int xyx(link H) {
             p = p->next;
             continue;
         }
-        else if (i < length/2 || GetTop(S) != p->data)
+        else if (i < length/2)
             Push(S,p->data);
-        else {
+	else if (GetTop(S) != p->data) {
+	    free(S);
+	    return 0;
+	}
+        else
             Pop(S);
-        }
         p = p->next;
     }
-    if (EmptyStack(S))
+    if (EmptyStack(S)) {
+	free(S);
         return 1;
-    else
+    }
+    else {
+	free(S);
         return 0;
+    }
 }
 
 link createLink() {
